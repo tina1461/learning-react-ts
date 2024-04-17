@@ -9,6 +9,7 @@ function App() {
 
   return (
     <>
+      <h1 className="text-3xl font-bold underline">Hello world!</h1>
       <div>
         <a href="https://vitejs.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
@@ -18,13 +19,22 @@ function App() {
         </a>
       </div>
       <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount(count => count + 1)}>
-          <PlusIcon className="text-blue-50" />
-        </button>
-        <button onClick={() => setCount(count => count - 1)}>
-          <MinusIcon className="text-blue-50" />
-        </button>
+      <div>
+        <div className="flex space-x-3">
+          <button
+            className="bg-gray-900"
+            onClick={() => setCount(count => count + 1)}
+          >
+            <PlusIcon className="h-6 w-6 text-blue-500" />
+          </button>
+          <button
+            className="bg-gray-900"
+            onClick={() => setCount(count => count - 1)}
+          >
+            <MinusIcon className="h-6 w-6 text-blue-500" />
+          </button>
+        </div>
+
         <div>count is {count}</div>
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
