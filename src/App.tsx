@@ -1,6 +1,7 @@
 import { useState } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
+import { PlusIcon, MinusIcon } from "@heroicons/react/24/solid";
 import "./App.css";
 
 function App() {
@@ -19,7 +20,10 @@ function App() {
       <h1>Vite + React</h1>
       <div className="card">
         <button onClick={() => setCount(count => count + 1)}>
-          count is {count}
+          <PlusIcon className="text-blue-50" />
+        </button>
+        <button onClick={() => setCount(count => count - 1)}>
+          <MinusIcon className="text-blue-50" />
         </button>
         <div>count is {count}</div>
         <p>
