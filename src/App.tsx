@@ -6,8 +6,7 @@ function App() {
   const [itemName, setItemName] = useState("");
   const [shoppingList, setShoppingList] = useState<string[]>([]);
 
-  const addingItem = () => {
-    if (itemName.length === 0) return;
+  const addItem = () => {
     setShoppingList(prevState => [...prevState, itemName.trim()]);
     setItemName("");
   };
@@ -27,7 +26,7 @@ function App() {
         />
         <Button
           className="text-center"
-          onClick={addingItem}
+          onClick={addItem}
           disabled={itemName.length === 0}
         >
           Add item
