@@ -11,15 +11,15 @@ describe("ShoppingList", () => {
     const addItemButton = screen.getByText("Add item");
 
     await user.type(input, "Milk");
-    userEvent.click(addItemButton);
+    await userEvent.click(addItemButton);
   });
   test("add item function should adds an item into shopping list", () => {
     expect(screen.getByText("Milk")).toBeInTheDocument();
   });
 
-  test("removeItem function removes an item from the shopping list", () => {
+  test("removeItem function removes an item from the shopping list", async () => {
     const removeItemButton = screen.getByTestId("remove_button_0");
-    userEvent.click(removeItemButton);
+    await userEvent.click(removeItemButton);
     expect(screen.queryByText("Milk")).not.toBeInTheDocument();
   });
 });
