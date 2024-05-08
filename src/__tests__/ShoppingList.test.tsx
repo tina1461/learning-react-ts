@@ -18,24 +18,26 @@ describe("ShoppingList", () => {
       name: new RegExp(`remove ${itemName}`, "i"),
     });
     await user.click(removeItemButton);
-    expect(screen.queryByText(itemName)).not.toBeInTheDocument();
   };
 
   beforeEach(() => {
     render(<ShoppingList />);
   });
 
-  test("should add an item into shopping list", async () => {
-    await addItem("Milk");
-    expect(screen.getByText("Milk")).toBeInTheDocument();
+  describe("Single item opreations", () => {
+    test("should add an item into shopping list", async () => {
+      await addItem("Milk");
+      expect(screen.getByText("Milk")).toBeInTheDocument();
+    });
+
+    test("should remove an item from the shopping list", async () => {
+      await addItem("Milk");
+      await removeItem("Milk");
+      expect(screen.queryByText("Milk")).not.toBeInTheDocument();
+    });
   });
 
-  test("should remove an item from the shopping list", async () => {
-    await addItem("Milk");
-    await removeItem("Milk");
-  });
-
-  describe("Add and remove multiple items", () => {
+  describe("Multiple items opreations", () => {
     const itemsArray = ["Milk", "Apple", "Banana"];
 
     beforeEach(async () => {
@@ -53,6 +55,7 @@ describe("ShoppingList", () => {
     test("should remove multiple items from the shopping list", async () => {
       for (const itemName of itemsArray) {
         await removeItem(itemName);
+        expect(screen.queryByText(itemName)).not.toBeInTheDocument();
       }
     });
   });
