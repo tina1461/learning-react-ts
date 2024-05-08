@@ -5,21 +5,55 @@ import ShoppingList from "@/components/ShoppingList";
 
 describe("ShoppingList", () => {
   const user = userEvent.setup();
-  beforeEach(async () => {
-    render(<ShoppingList />);
-    const input = screen.getByPlaceholderText("Item Name");
-    const addItemButton = screen.getByText("Add item");
 
-    await user.type(input, "Milk");
-    await userEvent.click(addItemButton);
+  const addItem = async (itemName: string) => {
+    const input = screen.getByPlaceholderText("Item Name");
+    const addItemButton = screen.getByRole("button", { name: /add item/i });
+    await user.type(input, itemName);
+    await user.click(addItemButton);
+  };
+
+  const removeItem = async (itemName: string) => {
+    const removeItemButton = screen.getByRole("button", {
+      name: new RegExp(`remove ${itemName}`, "i"),
+    });
+    await user.click(removeItemButton);
+    expect(screen.queryByText(itemName)).not.toBeInTheDocument();
+  };
+
+  beforeEach(() => {
+    render(<ShoppingList />);
   });
-  test("add item function should adds an item into shopping list", () => {
+
+  test("should add an item into shopping list", async () => {
+    await addItem("Milk");
     expect(screen.getByText("Milk")).toBeInTheDocument();
   });
 
-  test("removeItem function removes an item from the shopping list", async () => {
-    const removeItemButton = screen.getByTestId("remove_button_0");
-    await userEvent.click(removeItemButton);
-    expect(screen.queryByText("Milk")).not.toBeInTheDocument();
+  test("should remove an item from the shopping list", async () => {
+    await addItem("Milk");
+    await removeItem("Milk");
+  });
+
+  describe("Add and remove multiple items", () => {
+    const itemsArray = ["Milk", "Apple", "Banana"];
+
+    beforeEach(async () => {
+      for (const itemName of itemsArray) {
+        await addItem(itemName);
+      }
+    });
+
+    test("should add multiple items into the shopping list", () => {
+      itemsArray.forEach(itemName => {
+        expect(screen.getByText(itemName)).toBeInTheDocument();
+      });
+    });
+
+    test("should remove multiple items from the shopping list", async () => {
+      for (const itemName of itemsArray) {
+        await removeItem(itemName);
+      }
+    });
   });
 });

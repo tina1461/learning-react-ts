@@ -44,7 +44,7 @@ function ShoppingList() {
               variant="outline"
               size="icon"
               onClick={() => removeItem(itemIndex)}
-              data-testid={`remove_button_${itemIndex}`}
+              aria-label={`Remove ${item}`}
             >
               <XCircleIcon className="h-6 w-6" />
             </Button>
