@@ -21,9 +21,11 @@
     "noFallthroughCasesInSwitch": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "components/*": ["./src/components/*"],
+      "ui/*": ["./src/components/ui/*"]
     }
   },
-  "include": ["src"],
+  "include": ["src", "setup-test.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
