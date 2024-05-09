@@ -1,20 +1,33 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useLocalStorage } from "usehooks-ts";
+
 import { Button, Input, Label } from "@/components/ui";
 import { XCircleIcon } from "@heroicons/react/24/solid";
 
 function ShoppingList() {
+  const [storageShoppingList, setStoreShoppingList] = useLocalStorage(
+    "shopping-list",
+    [] as string[],
+  );
   const [itemName, setItemName] = useState("");
   const [shoppingList, setShoppingList] = useState<string[]>([]);
 
   const addItem = () => {
     setShoppingList(prevState => [...prevState, itemName.trim()]);
+    setStoreShoppingList((storageShoppingList: string[]) => [
+      ...storageShoppingList,
+      itemName.trim(),
+    ]);
     setItemName("");
   };
 
   const removeItem = (index: number) => {
     const newArr = shoppingList.filter((_, itemIndex) => itemIndex !== index);
     setShoppingList(newArr);
+    setStoreShoppingList(newArr);
   };
+
+  const list = storageShoppingList.length ? storageShoppingList : shoppingList;
 
   return (
     <>
@@ -33,7 +46,7 @@ function ShoppingList() {
         </Button>
       </div>
       <div className="p-5">
-        {shoppingList.map((item, itemIndex) => (
+        {list.map((item, itemIndex) => (
           <div
             key={`item-${itemIndex}-${item}`}
             className="flex items-center space-x-2"
